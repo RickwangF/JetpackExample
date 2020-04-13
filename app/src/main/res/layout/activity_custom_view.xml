@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.CustomViewActivity">
+
+        <com.rick.jetpackexample.view.SimpleRoundView
+            android:id="@+id/round_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="15dp"
+            android:background="#000000">
+        </com.rick.jetpackexample.view.SimpleRoundView>
+
+        <com.rick.jetpackexample.view.SimpleCircleView
+            android:id="@+id/circle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@id/round_view"
+            android:layout_marginTop="20dp"
+            app:circle_color="@color/colorPrimary"
+            android:padding="10dp">
+        </com.rick.jetpackexample.view.SimpleCircleView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

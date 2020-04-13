@@ -1,0 +1,51 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 状态栏颜色 -->
+        <item name="android:colorPrimaryDark">#0000ff</item>
+
+        <!-- Toolbar 颜色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!--colorAccent 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色。-->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- 底部系统导航栏的背景颜色 -->
+        <item name="android:navigationBarColor">#0000ff</item>
+
+        <!-- Tool bar menu的颜色 -->
+        <item name="android:textColorSecondary">#ffffff</item>
+    </style>
+
+    <!-- Tool Bar 菜单选项的主题 -->
+    <style name="PopupTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuTheme</item>
+        <item name="android:paddingRight">-5dp</item>
+    </style>
+
+    <style name="OverflowMenuTheme" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <!--这个属性设置为false，就能使得popup在Toolbar的下面显示-->
+        <item name="overlapAnchor">false</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
