@@ -163,7 +163,9 @@ public class PermissionActivity extends AppCompatActivity {
 
     private void selectImageFromLibrary() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        // both of two work
+        //intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        intent.setType("image/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, 1);
     }
