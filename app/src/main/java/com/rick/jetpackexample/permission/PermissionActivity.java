@@ -175,7 +175,7 @@ public class PermissionActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
-                if (data.getData() != null) {
+                if (data != null && data.getData() != null) {
                     String path = FileUtils.getFilePathByUri(this, data.getData());
                     Log.e("ActivityResult", "path is " + path);
                 }
