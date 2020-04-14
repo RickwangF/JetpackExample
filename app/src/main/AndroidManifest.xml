@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.ItemDecorationActivity">
+        </activity>
+        <activity android:name=".view.CustomViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".view.CustomViewActivity">
         </activity>
         <activity android:name=".thread.IntentServiceActivity" />
         <activity android:name=".thread.HandlerThreadActivity"></activity>

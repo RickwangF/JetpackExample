@@ -29,5 +29,29 @@
             android:padding="10dp">
         </com.rick.jetpackexample.view.SimpleCircleView>
 
+        <com.rick.jetpackexample.view.SimpleImageButton
+            android:id="@+id/imageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/circle_view"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:background_color="#ded4f7"
+            app:text="聊天"
+            app:text_color="#7540ee">
+        </com.rick.jetpackexample.view.SimpleImageButton>
+
+        <com.rick.jetpackexample.view.SimpleView
+            android:id="@+id/simple_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/imageBtn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:background_color="@color/colorPrimary"
+            android:layout_marginTop="20dp">
+        </com.rick.jetpackexample.view.SimpleView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
