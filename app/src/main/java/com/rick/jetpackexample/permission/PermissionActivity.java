@@ -1,6 +1,7 @@
 package com.rick.jetpackexample.permission;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,18 +10,22 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.rick.jetpackexample.MainActivity;
 import com.rick.jetpackexample.R;
 import com.rick.jetpackexample.databinding.ActivityPermissionBinding;
+import com.rick.jetpackexample.utils.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,12 @@ public class PermissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 requestMultiplePermissions();
+            }
+        });
+        mBind.selectImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImageFromLibrary();
             }
         });
     }
@@ -147,6 +158,26 @@ public class PermissionActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "跳转失败", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        }
+    }
+
+    private void selectImageFromLibrary() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
+                if (data.getData() != null) {
+                    String path = FileUtils.getFilePathByUri(this, data.getData());
+                    Log.e("ActivityResult", "path is " + path);
+                }
+            }
         }
     }
 }
