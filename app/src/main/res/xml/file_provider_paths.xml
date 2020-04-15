@@ -12,4 +12,7 @@
     <external-path
         name="external_storage_root"
         path="." />
+    <external-files-path
+        name="files"
+        path="files/"/>
 </paths>

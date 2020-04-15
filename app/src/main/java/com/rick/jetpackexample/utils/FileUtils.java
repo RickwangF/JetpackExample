@@ -9,8 +9,183 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtils {
+
+    public static final int RESULT_FAILURE = 0;
+    public static final int RESULT_SUCCESS = 1;
+    public static final int RESULT_EXISTS = 2;
+    public static final int RESULT_NOT_EXISTS = 3;
+
+    public static boolean sdCardIsMounted() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public static int createFile(String fileName) {
+        if (fileName == null || fileName.equals("")) {
+            return RESULT_FAILURE;
+        }
+
+        if (fileName.endsWith(File.separator)) {
+            return RESULT_FAILURE;
+        }
+
+        File file = new File(fileName);
+        if (file.getParentFile() != null && !file.getParentFile().exists()) {
+            File parentFile = file.getParentFile();
+            if (!parentFile.mkdir()){
+                return RESULT_FAILURE;
+            }
+        }
+
+        try {
+            if(!file.createNewFile()) {
+                return RESULT_FAILURE;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("File", "创建文件失败");
+        }
+
+        return RESULT_SUCCESS;
+    }
+
+    public static int createDirectory(String dirPath) {
+        if (dirPath == null || dirPath.equals("")) {
+            return RESULT_FAILURE;
+        }
+
+        if (!dirPath.endsWith(File.separator)) {
+            dirPath = dirPath + File.separator;
+        }
+
+        File dir = new File(dirPath);
+        if (dir.exists()) {
+            return RESULT_EXISTS;
+        }
+
+        if (dir.mkdir()) {
+            return RESULT_SUCCESS;
+        } else {
+            return RESULT_FAILURE;
+        }
+    }
+
+    public static List<String> ListFilesAt(String dirPath, boolean deep) {
+        return ListFilesAt(dirPath, null, deep);
+    }
+
+    public static List<String> ListFilesAt(String dirPath, String ext, boolean deep) {
+        File dirPathFile = new File(dirPath);
+        List<String> fileList = new ArrayList<>();
+        if (!dirPathFile.exists()) {
+            return fileList;
+        }
+
+        File[] files = dirPathFile.listFiles();
+        if (files == null || files.length == 0) {
+            return fileList;
+        }
+
+        for (File file : files) {
+            if (deep) {
+                if (file.isDirectory()) {
+                    List<String> subFiles = ListFilesAt(file.getAbsolutePath(), ext, true);
+                    if (!ListUtils.isEmpty(subFiles)) {
+                        fileList.addAll(subFiles);
+                    }
+                } else if (file.isFile()) {
+                    String path = file.getAbsolutePath();
+                    if (ext != null && !ext.equals("")) {
+                        if (path.endsWith(ext)) {
+                            fileList.add(path);
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    fileList.add(path);
+                }
+            } else {
+                if (file.isFile()) {
+                    String path = file.getAbsolutePath();
+                    if (ext != null && !ext.equals("")) {
+                        if (path.endsWith(ext)) {
+                            fileList.add(path);
+                        } else {
+                            continue;
+                        }
+                    }
+                    fileList.add(path);
+                }
+            }
+        }
+
+        return fileList;
+    }
+
+    public static int copyFile(String source, String target) {
+        if (source == null || source.equals("")) {
+            Log.e("File", "源文件不能为空");
+            return RESULT_FAILURE;
+        }
+
+        if (target == null || target.equals("")) {
+            Log.e("File", "目标文件不能为空");
+            return RESULT_FAILURE;
+        }
+
+        FileInputStream inputStream = null;
+        FileOutputStream outputStream = null;
+        try {
+            inputStream = new FileInputStream(source);
+            outputStream = new FileOutputStream(target);
+
+            byte[] buffer = new byte[1024];
+            int length = 0;
+            while ((length = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("File", "文件未找到");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return RESULT_SUCCESS;
+    }
+
+    /**
+     * Content:// 转 File://
+     * */
     public static String getFilePathByUri(Context context, Uri uri) {
         String path = null;
         // 以 file:// 开头的
