@@ -32,6 +32,32 @@ public class FileUtils {
         return state.equals(Environment.MEDIA_MOUNTED);
     }
 
+    public static String getFileExtension(String fileName) {
+        String extension = "";
+        if (fileName == null && fileName.equals("")) {
+            return extension;
+        }
+
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i+1);
+        }
+        return extension;
+    }
+
+    public static String getFileName(String filePath) {
+        String fileName = "";
+        if (filePath == null && filePath.equals("")) {
+            return fileName;
+        }
+
+        int i = filePath.lastIndexOf('/');
+        if (i > 0) {
+            fileName = filePath.substring(i+1);
+        }
+        return fileName;
+    }
+
     public static int createFile(String fileName) {
         if (fileName == null || fileName.equals("")) {
             return RESULT_FAILURE;
@@ -156,6 +182,60 @@ public class FileUtils {
             int length = 0;
             while ((length = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, length);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("File", "文件未找到");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return RESULT_SUCCESS;
+    }
+
+    public static int moveFile(String source, String target) {
+        if (source == null || source.equals("")) {
+            Log.e("File", "源文件不能为空");
+            return RESULT_FAILURE;
+        }
+
+        if (target == null || target.equals("")) {
+            Log.e("File", "目标文件不能为空");
+            return RESULT_FAILURE;
+        }
+
+        FileInputStream inputStream = null;
+        FileOutputStream outputStream = null;
+        try {
+            inputStream = new FileInputStream(source);
+            outputStream = new FileOutputStream(target);
+
+            byte[] buffer = new byte[1024];
+            int length = 0;
+            while ((length = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            File targetFile = new File(target);
+            if (targetFile.exists()) {
+                File sourceFile = new File(source);
+                sourceFile.delete();
             }
 
         } catch (FileNotFoundException e) {
