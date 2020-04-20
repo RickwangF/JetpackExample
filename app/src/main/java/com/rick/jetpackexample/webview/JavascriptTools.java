@@ -7,6 +7,10 @@ import com.alibaba.fastjson.JSON;
 
 public class JavascriptTools {
 
+    public interface JavascriptToolsBlockCallbackNamesReceiver{
+        void selectImageCallback(String callbackName);
+    }
+
     @JavascriptInterface
     public String JD_GetUserInfo() {
         UserModel userModel = new UserModel();
