@@ -4,9 +4,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,10 +22,11 @@ import android.webkit.WebViewClient;
 
 import com.rick.jetpackexample.R;
 import com.rick.jetpackexample.databinding.ActivityWebViewBinding;
+import com.rick.jetpackexample.utils.KeyboardChangeListener;
 
 import java.util.Arrays;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity implements KeyboardChangeListener.KeyboardListener{
 
     ActivityWebViewBinding mBind;
 
@@ -37,8 +40,10 @@ public class WebViewActivity extends AppCompatActivity {
         mBind = DataBindingUtil.setContentView(this, R.layout.activity_web_view);
 
         initWebView();
+        KeyboardChangeListener.create(this).setKeyboardListener(this);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         mBind.webView.setDrawingCacheEnabled(true);
         mBind.webView.buildDrawingCache();
@@ -48,6 +53,7 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings = mBind.webView.getSettings();
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setJavaScriptEnabled(true);
+        mBind.webView.addJavascriptInterface(new JavascriptTools(), "AndroidNative");
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -122,10 +128,14 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
+            fileCallback.onReceiveValue(null);
+            fileCallback = null;
             return;
         }
 
         if (requestCode != 1) {
+            fileCallback.onReceiveValue(null);
+            fileCallback = null;
             return;
         }
 
@@ -140,5 +150,16 @@ public class WebViewActivity extends AppCompatActivity {
             Log.e("html", "select media path is " + uri);
             fileCallback = null;
         }
+    }
+
+    @Override
+    public void onKeyboardChange(boolean isShow, int keyboardHeight) {
+        Log.e("html", "keyboardHeight is " + keyboardHeight);
+        mBind.webView.evaluateJavascript("window.JDApp.KeyboardHideShow()", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+
+            }
+        });
     }
 }
