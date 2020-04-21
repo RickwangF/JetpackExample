@@ -64,6 +64,8 @@ public class StorageActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBind = DataBindingUtil.setContentView(this, R.layout.activity_storage);
+        listInternalStorageDirectory();
+        listExternalStorageDirectory();
         mBind.selectImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
