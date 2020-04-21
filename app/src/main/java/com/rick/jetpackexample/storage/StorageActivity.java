@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
@@ -127,6 +128,28 @@ public class StorageActivity extends AppCompatActivity {
                 copyFile();
             }
         });
+        mBind.provideFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                provideFile();
+            }
+        });
+    }
+
+    private void provideFile() {
+        File dirFile = getExternalFilesDir(Environment.MEDIA_MOUNTED);
+        String dirPath = "";
+        if (dirFile != null) {
+            dirPath = dirFile.getAbsolutePath();
+        }
+        List<String> files = FileUtils.ListFilesAt(dirPath, true);
+        Log.e("Storage", "files in externalFilesDir is " + files);
+        if (files.size() > 0) {
+            String firstFile = files.get(0);
+
+            Uri contentUri = FileProvider.getUriForFile(this, "com.rick.jetpackexample.SimpleFileProvider", new File(firstFile));
+            Log.e("Storage", "Provide File URI is " + contentUri);
+        }
     }
 
     private void copyFile() {
