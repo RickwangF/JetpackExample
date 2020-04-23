@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -34,6 +35,8 @@ public class WebViewActivity extends AppCompatActivity implements KeyboardChange
 
     ValueCallback<Uri[]> fileCallback;
 
+    JavascriptTools tools;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +56,21 @@ public class WebViewActivity extends AppCompatActivity implements KeyboardChange
         webSettings = mBind.webView.getSettings();
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setJavaScriptEnabled(true);
-        mBind.webView.addJavascriptInterface(new JavascriptTools(), "AndroidNative");
+        tools = new JavascriptTools();
+        tools.setInteractionHandler(new JavascriptTools.JavascriptToolsInteractionHandler() {
+            @Override
+            public void back(boolean isAll) {
+                finish();
+            }
+        });
+        mBind.webView.addJavascriptInterface(tools, "AndroidNative");
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webSettings.setNeedInitialFocus(false);
         WebView.setWebContentsDebuggingEnabled(true);
+        mBind.webView.requestFocus(View.FOCUS_DOWN);
         mBind.webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -110,7 +122,7 @@ public class WebViewActivity extends AppCompatActivity implements KeyboardChange
                 return true;
             }
         });
-        mBind.webView.loadUrl("file:///android_asset/htmls/index.html");  // "file:///android_asset/htmls/index.html"
+        mBind.webView.loadUrl("file:///android_asset/htmls/index.html#/article/detail");  // "file:///android_asset/htmls/index.html"
     }
 
     private void showFileChooser(boolean isImage) {
@@ -156,6 +168,16 @@ public class WebViewActivity extends AppCompatActivity implements KeyboardChange
     public void onKeyboardChange(boolean isShow, int keyboardHeight) {
         Log.e("html", "keyboardHeight is " + keyboardHeight);
         mBind.webView.evaluateJavascript("window.JDApp.KeyboardHideShow()", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        mBind.webView.evaluateJavascript("window.JDApp.NativeBack()", new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String value) {
 

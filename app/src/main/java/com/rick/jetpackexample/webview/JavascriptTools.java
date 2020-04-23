@@ -11,6 +11,20 @@ public class JavascriptTools {
         void selectImageCallback(String callbackName);
     }
 
+    public interface JavascriptToolsInteractionHandler {
+        void back(boolean isAll);
+    }
+
+    private JavascriptToolsInteractionHandler interactionHandler;
+
+    public JavascriptToolsInteractionHandler getInteractionHandler() {
+        return interactionHandler;
+    }
+
+    public void setInteractionHandler(JavascriptToolsInteractionHandler interactionHandler) {
+        this.interactionHandler = interactionHandler;
+    }
+
     @JavascriptInterface
     public String JD_GetUserInfo() {
         UserModel userModel = new UserModel();
@@ -22,6 +36,13 @@ public class JavascriptTools {
         String userJSONString = JSON.toJSONString(userModel);
         Log.e("html", "userInfo is " + userJSONString);
         return userJSONString;
+    }
+
+    @JavascriptInterface
+    public void JD_PopToRootController(boolean isAll) {
+        if (interactionHandler != null) {
+            interactionHandler.back(isAll);
+        }
     }
 
 }
