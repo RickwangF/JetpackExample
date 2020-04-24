@@ -70,7 +70,6 @@ public class WebViewActivity extends AppCompatActivity implements KeyboardChange
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         webSettings.setNeedInitialFocus(false);
         WebView.setWebContentsDebuggingEnabled(true);
-        mBind.webView.requestFocus(View.FOCUS_DOWN);
         mBind.webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
