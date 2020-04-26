@@ -27,8 +27,7 @@
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -38,12 +37,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".service.ServiceExeActivity"></activity>
-        <activity android:name=".service.ServiceBaseActivity">
+        <activity android:name=".broadcast.BroadcastActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".service.ServiceExeActivity" />
+        <activity android:name=".service.ServiceBaseActivity">
         </activity>
 
         <service
@@ -54,8 +55,7 @@
         <activity
             android:name=".webview.WebViewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".storage.StorageActivity" />
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".view.ItemDecorationActivity" />
@@ -81,6 +81,15 @@
             </intent-filter>
         </service>
 
+<!--        <receiver-->
+<!--            android:name=".broadcast.SimpleBroadcastReceiver"-->
+<!--            android:enabled="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="Intent.ACTION_AIRPLANE_MODE_CHANGED" />-->
+<!--                <action android:name="ConnectivityManager.CONNECTIVITY_ACTION" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+
         <provider
             android:name=".SimpleFileProvider"
             android:authorities="com.rick.jetpackexample.SimpleFileProvider"
@@ -94,6 +103,8 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
+
     </application>
 
 </manifest>
