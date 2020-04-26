@@ -37,15 +37,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".string.StringFunctionActivity"></activity>
         <activity android:name=".broadcast.BroadcastActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".service.ServiceExeActivity" />
-        <activity android:name=".service.ServiceBaseActivity">
-        </activity>
+        <activity android:name=".service.ServiceBaseActivity"></activity>
 
         <service
             android:name=".service.SimpleService"
@@ -55,7 +56,7 @@
         <activity
             android:name=".webview.WebViewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".storage.StorageActivity" />
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".view.ItemDecorationActivity" />
@@ -79,17 +80,14 @@
             <intent-filter>
                 <action android:name="com.rick.jetpack" />
             </intent-filter>
-        </service>
-
-<!--        <receiver-->
-<!--            android:name=".broadcast.SimpleBroadcastReceiver"-->
-<!--            android:enabled="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="Intent.ACTION_AIRPLANE_MODE_CHANGED" />-->
-<!--                <action android:name="ConnectivityManager.CONNECTIVITY_ACTION" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
+        </service> <!-- <receiver -->
+        <!-- android:name=".broadcast.SimpleBroadcastReceiver" -->
+        <!-- android:enabled="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="Intent.ACTION_AIRPLANE_MODE_CHANGED" /> -->
+        <!-- <action android:name="ConnectivityManager.CONNECTIVITY_ACTION" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
         <provider
             android:name=".SimpleFileProvider"
             android:authorities="com.rick.jetpackexample.SimpleFileProvider"
@@ -103,8 +101,6 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
-
     </application>
 
 </manifest>
