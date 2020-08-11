@@ -39,11 +39,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".string.StringFunctionActivity"></activity>
         <activity android:name=".broadcast.BroadcastActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".service.ServiceExeActivity" />
         <activity android:name=".service.ServiceBaseActivity"></activity>
@@ -60,7 +55,12 @@
         <activity android:name=".storage.StorageActivity" />
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".view.ItemDecorationActivity" />
-        <activity android:name=".view.CustomViewActivity" />
+        <activity android:name=".view.CustomViewActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".thread.IntentServiceActivity" />
         <activity android:name=".thread.HandlerThreadActivity" />
         <activity android:name=".thread.AsyncTaskActivity" />

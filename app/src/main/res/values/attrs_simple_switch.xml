@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleSwitch">
+        <attr name="on_title" format="string|reference"/>
+        <attr name="off_title" format="string|reference"/>
+    </declare-styleable>
+</resources>
