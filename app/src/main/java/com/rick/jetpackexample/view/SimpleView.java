@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.text.Layout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,11 +88,43 @@ public class SimpleView extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        return super.dispatchTouchEvent(event);
+        String eventName = "";
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            eventName = "ACTION_DOWN";
+            Log.e("Touch", "View dispatchTouchEvent motion event down");
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            eventName = "ACTION_MOVE";
+            Log.e("Touch", "View dispatchTouchEvent motion event move");
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            eventName = "ACTION_UP";
+            Log.e("Touch", "View dispatchTouchEvent motion event up");
+        } else if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+            eventName = "ACTION_CANCEL";
+            Log.e("Touch", "View dispatchTouchEvent motion event cancel");
+        }
+        boolean result = super.dispatchTouchEvent(event);
+        Log.e("Touch", "View dispatchTouchEvent " + eventName + " result is " + result);
+        return result;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+        String eventName = "";
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            eventName = "ACTION_DOWN";
+            Log.e("Touch", "View onTouchEvent motion event down");
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            eventName = "ACTION_MOVE";
+            Log.e("Touch", "View onTouchEvent motion event move");
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            eventName = "ACTION_UP";
+            Log.e("Touch", "View onTouchEvent motion event up");
+        } else if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+            eventName = "ACTION_CANCEL";
+            Log.e("Touch", "View onTouchEvent motion event cancel");
+        }
+        boolean result = super.onTouchEvent(event);
+        Log.e("Touch", "View onTouchEvent " + eventName + " result is " + result);
+        return result;
     }
 }

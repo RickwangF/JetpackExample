@@ -64,6 +64,30 @@
             app:off_title="关"
             app:on_title="开">
         </com.rick.jetpackexample.view.SimpleSwitch>
+        
+        <com.rick.jetpackexample.view.SimpleLayout
+            android:id="@+id/simple_layout"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="#999999"
+            app:layout_constraintTop_toBottomOf="@id/simple_switch"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.rick.jetpackexample.view.SimpleView
+                android:id="@+id/center_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:background_color="@color/colorPrimary"
+                android:layout_marginTop="20dp">
+            </com.rick.jetpackexample.view.SimpleView>
+
+        </com.rick.jetpackexample.view.SimpleLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
