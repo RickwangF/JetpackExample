@@ -23,7 +23,7 @@ public class SimpleView extends View {
 
     private Context context;
 
-    private int backgroundColor;
+    private int backgroundColor = Color.parseColor("#66000000");
 
     private int mWidth = 200;
 

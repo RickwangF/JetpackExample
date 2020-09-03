@@ -37,11 +37,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".string.StringFunctionActivity"></activity>
-        <activity android:name=".broadcast.BroadcastActivity">
+        <activity android:name=".view.SimpleLayoutActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".recycler.HorizontalGridActivity">
+        </activity>
+        <activity android:name=".string.StringFunctionActivity" />
+        <activity android:name=".broadcast.BroadcastActivity" />
         <activity android:name=".service.ServiceExeActivity" />
-        <activity android:name=".service.ServiceBaseActivity"></activity>
+        <activity android:name=".service.ServiceBaseActivity" />
 
         <service
             android:name=".service.SimpleService"
@@ -56,10 +63,6 @@
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".view.ItemDecorationActivity" />
         <activity android:name=".view.CustomViewActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".thread.IntentServiceActivity" />
         <activity android:name=".thread.HandlerThreadActivity" />
